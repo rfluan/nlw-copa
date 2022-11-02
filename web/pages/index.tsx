@@ -18,3 +18,5 @@ export const getServerSideProps = async () => {
     }
   }
 }
+
+// começando no android
