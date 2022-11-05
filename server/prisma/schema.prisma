@@ -49,7 +49,7 @@ model User {
 
 model Game {
   id   String   @id @default(cuid())
-  data DateTime 
+  date DateTime 
 
   firstTeamCountryCode  String
   secondTeamCountryCode String
@@ -61,7 +61,7 @@ model Guess {
   id String   @id @default(cuid())
 
   firstTeamPoints   Int
-  secoundTeamPoints Int
+  secondTeamPoints  Int
   createdAt         DateTime @default(now())
   gameId            String
   participantId     String
@@ -69,4 +69,6 @@ model Guess {
 
   participant Participant @relation(fields: [participantId], references: [id])
   game        Game        @relation(fields: [gameId], references: [id])
+
+  @@unique([participantId, gameId])
 }
