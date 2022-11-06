@@ -8,14 +8,14 @@ export async function gameRoutes(fastify: FastifyInstance) {
         onRequest: [authenticate],
     }, async (request) => {
         const getPoolParams = z.object({
-            id:z.string(),
+            id: z.string(),
         })
 
         const { id } = getPoolParams.parse(request.params)
 
         const games = await prisma.game.findMany({
             orderBy: {
-                data: 'desc',
+                date: 'desc',
             },
             include: {
                 guesses: {

@@ -1,4 +1,5 @@
 import Fastify from 'fastify'
+
 import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
 
@@ -8,12 +9,13 @@ import { gameRoutes } from './routes/game'
 import { guessRoutes } from './routes/guess'
 import { userRoutes } from './routes/user'
 
-async function bootstrap(): Promise<void> {
+const start = async () => {
     const fastify = Fastify({
         logger: true,
     })
 
-    await fastify.register(cors, {
+    try {
+      await fastify.register(cors, {
         origin: true,
     })
 
@@ -28,7 +30,12 @@ async function bootstrap(): Promise<void> {
     await fastify.register(guessRoutes)
     await fastify.register(userRoutes)
     
-    await fastify.listen({ port: 3333, /* host: '0.0.0.0' */ })
-}
+    await fastify.listen({ port: 3333, host: '0.0.0.0' })  
+    } catch (err) {
+        fastify.log.error(err)
 
-bootstrap()
+        process.exit(1)
+    }   
+}   
+
+start()
